@@ -1,0 +1,20 @@
+{
+  "name": "api_git_take",
+  "version": "1.0.0",
+  "description": "Github Take RESTful API",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "keywords": [
+    "RESTful",
+    "API",
+    "Node"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lzcampos/blip-git-api.git"
+  },
+  "author": "lzcampos",
+  "license": "ISC"
+}
