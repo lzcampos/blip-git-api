@@ -1,5 +1,4 @@
 import CardService from "../services/CardService";
-import Card from "../models/Card"
 
 const cardService = new CardService()
 
