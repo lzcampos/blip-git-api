@@ -16,8 +16,8 @@ class CardService {
         return {
             error: false,
             statusCode: 200,
-            data: cards,
-            total: cards.length
+            itemType: "application/vnd.lime.document-select+json",
+            items: cards,
         }
     }
 
@@ -50,7 +50,25 @@ class CardService {
     }
 
     buildCards(repos) {
-        return repos.map((repo) => new Card(repo))
+        return repos.map((repo) => ({
+            header : {
+                type: "application/vnd.lime.media-link+json",
+                value: new Card(repo)
+            },
+            options: [{
+                label: {
+                    type: "text/plain",
+                    value: "",
+                },
+                value: {
+                    type: "application/json",
+                    value: {
+                        key1: "value1",
+                        key2: "2"
+                    }
+                }
+            }]
+        }))
     }
 }
 
