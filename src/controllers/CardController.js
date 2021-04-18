@@ -1,9 +1,7 @@
 import CardService from "../services/CardService";
 import Card from "../models/Card"
 
-const cardService = new CardService(
-    new Card({title: "", subtitle: "", imageUrl: ""})
-)
+const cardService = new CardService()
 
 class CardController {
     constructor(service) {

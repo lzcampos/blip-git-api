@@ -1,9 +1,9 @@
 
 class Card {
-    constructor({title, subtitle, imageUrl}) {
-        this.title = title;
-        this.subtitle = subtitle;
-        this.imageUrl = imageUrl;
+    constructor(Repo) {
+        this.title = Repo.name;
+        this.subtitle = Repo.description;
+        this.uri = Repo.owner.avatar_url; // Card Image
     }
 }
 
