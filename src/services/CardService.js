@@ -1,19 +1,31 @@
+import Card from "../models/Card";
+
 const fetch = require("node-fetch");
 
 class CardService {
 
+    constructor() {
+        this.CARD_QUANTITY = 5;
+    }
+
     async getCards() {
-        const CARD_QUANTITY = 5;
         const takeRepos = await this.getAllTakeRepos();
-        const filteredRepos = this.filterReposByLanguage(takeRepos, "C#")
-        const sortedRepos = this.sortReposByCreationDate(filteredRepos)
-        const olderRepos = sortedRepos.slice(0, CARD_QUANTITY)
+        if(takeRepos?.error === true) return takeRepos;
+
+        const cards = this.convertReposIntoCards(takeRepos);
         return {
             error: false,
             statusCode: 200,
-            data: olderRepos,
-            total: olderRepos.length
+            data: cards,
+            total: cards.length
         }
+    }
+
+    convertReposIntoCards(repos) {
+        const filteredRepos = this.filterReposByLanguage(repos, "C#");
+        const sortedRepos = this.sortReposByCreationDate(filteredRepos);
+        const olderRepos = sortedRepos.slice(0, this.CARD_QUANTITY);
+        return this.buildCards(olderRepos);
     }
 
     async getAllTakeRepos() {
@@ -21,7 +33,11 @@ class CardService {
             const takeRepositoriesResponse = await fetch(`https://api.github.com/orgs/takenet/repos?per_page=100`);
             return await takeRepositoriesResponse.json();
         } catch(error) {
-            console.log(error)
+            return {
+                error: true,
+                statusCode: error.code,
+                message: error.message
+            }
         }
     }
 
@@ -30,7 +46,11 @@ class CardService {
     }
 
     sortReposByCreationDate(repos) {
-        return repos.sort((repo, nextRepo) =>  new Date(repo).getTime() - new Date(nextRepo).getTime())
+        return repos.sort((repo, nextRepo) =>  new Date(repo.created_at).getTime() - new Date(nextRepo.created_at).getTime())
+    }
+
+    buildCards(repos) {
+        return repos.map((repo) => new Card(repo))
     }
 }
 
