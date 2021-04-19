@@ -12,13 +12,15 @@ class CardService {
         const takeRepos = await this.getAllTakeRepos();
         if(takeRepos?.error === true) return takeRepos;
 
-        const cards = this.convertReposIntoCards(takeRepos);
+        const [cards, cardsObject] = this.convertReposIntoCards(takeRepos);
         return {
             type: "application/vnd.lime.collection+json",
             content: {
                 itemType: "application/vnd.lime.document-select+json",
                 items: cards,
-            }
+            },
+            // Using this to make caroussel work on builder...
+            cardsObject
         }
     }
 
@@ -26,7 +28,8 @@ class CardService {
         const filteredRepos = this.filterReposByLanguage(repos, "C#");
         const sortedRepos = this.sortReposByCreationDate(filteredRepos);
         const olderRepos = sortedRepos.slice(0, this.CARD_QUANTITY);
-        return this.buildCards(olderRepos);
+        const cardsObject = this.buildCardsObject(olderRepos);
+        return [this.buildCards(olderRepos), cardsObject];
     }
 
     async getAllTakeRepos() {
@@ -70,6 +73,14 @@ class CardService {
                 }
             }]
         }))
+    }
+
+    buildCardsObject(repos) {
+        let cardsObject = {};
+        for(let i = 0; i < repos.length; i++ ){
+            cardsObject[`${i + 1}`] = new Card(repos[i]);
+        }
+        return cardsObject;
     }
 }
 
