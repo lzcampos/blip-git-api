@@ -4,7 +4,9 @@ This project was developed to attend to a technical challenge from Take BLiP. Th
 
 To use the chatbot you need to download the flux [chatbot_flux.json](https://github.com/lzcampos/blip-git-api/blob/master/chatbot_flux.json) and import it on a bot created on the Blip platform.
 
-The app was made using Node.js (v12.19.0) with Express framework and a MVC-like architecture and you can see it working [here](https://blip-git-api.herokuapp.com/).
+The app was made using Node.js (v12.19.0) with Express framework and a MVC-like architecture. 
+
+You can see it working [here](https://blip-git-api.herokuapp.com/).
 
 
 ## Install
