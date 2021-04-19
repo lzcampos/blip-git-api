@@ -16,8 +16,11 @@ class CardService {
         return {
             error: false,
             statusCode: 200,
-            itemType: "application/vnd.lime.document-select+json",
-            items: cards,
+            type: "application/vnd.lime.collection+json",
+            content: {
+                itemType: "application/vnd.lime.document-select+json",
+                items: cards,
+            }
         }
     }
 
