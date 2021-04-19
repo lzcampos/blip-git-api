@@ -14,8 +14,6 @@ class CardService {
 
         const cards = this.convertReposIntoCards(takeRepos);
         return {
-            error: false,
-            statusCode: 200,
             type: "application/vnd.lime.collection+json",
             content: {
                 itemType: "application/vnd.lime.document-select+json",
